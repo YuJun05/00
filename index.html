@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<title>ch9-2使用CSS製作多層級選單(AI增強版)</title>
+<meta charset="utf-8">
+<style>
+ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none; 
+}
+.menu {
+    font-family: '標楷體';
+    font-size: 20px;
+}
+.menu > li { /* 子選擇器，只有第一層 */
+    float: left;
+}
+.menu li {
+    position: relative;
+    padding: 0px;
+    min-width: 120px;
+    /* 【新增/修改】設定選單 5% 圓角，並搭配 overflow: hidden 確保內部連結背景不會超出圓角範圍 */
+    border-radius: 5%;
+    overflow: hidden;
+    /* 【新增/修改】將原本的 1px 虛線改為 2px 實線，顏色採用與背景(淺藍)同色系的深藍色(#4682b4) */
+    border: 2px solid #4682b4;
+    /* 【新增】微調外距，避免相鄰選單的 2px 框線重疊變粗 */
+    margin: 1px;
+}
+.menu ul {
+    position: absolute;
+    z-index: 10;
+    /* 【修改】第一層下拉選單（第二層選單）設定在其對應上層選單之「右下方各 5% 處」開始顯示 */
+    top: 105%; /* 100%(正下方) + 5%(向下偏移) */
+    left: 5%;  /* 向右偏移 5% */
+    display: none; /* 預設 ul 不顯示 */
+    /* 【新增】確保子選單展開時不會被上層 li 的 overflow: hidden 裁切 */
+    overflow: visible;
+}
+.menu li:hover {
+    /* 【新增】滑鼠移入時允許顯示超出範圍的子選單 */
+    overflow: visible;
+}
+.menu ul li > ul { /* 定義上一層 ul li 與下一層 ul 的距離（第三層以後） */
+    z-index: 20;
+    /* 【修改】確保第三層以後的子選單同樣從對應上層項目的「右下方各 5% 處」開始顯示 */
+    top: 105%;
+    left: 5%;
+}
+.menu a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    /* 【新增/修改】設定淺藍色背景以配合「同背景加深色系框線」需求（避免在 GitHub 上因缺少 img 資料夾而破圖） */
+    background-color: #add8e6; 
+    /* 若您有上傳 img 資料夾，可取消下方兩行註解以恢復圖片背景 */
+    /* background-image: url(img/btn1.png); */
+    /* background-size: cover; */
+    color: black;
+    /* 【新增】讓連結本身也具備圓角，與外層 li 契合 */
+    border-radius: 4%;
+}
+.menu a:hover {
+    /* 【新增/修改】滑鼠懸停時背景加深，與框線呼應 */
+    background-color: #4682b4;
+    /* background-image: url(img/btn2.png); */
+    /* background-size: cover; */
+    color: white;
+}
+.menu li:hover > ul {
+    display: block; /* 移動到 li，li 下一層的 ul 才顯示 */
+}
+</style>
+</head>
+<body>
+<ul class="menu">
+    <li><a href="#">台北景點</a>
+        <ul>
+            <li><a href="#">台北101</a></li>
+            <li><a href="#">迪化街</a></li>
+            <li><a href="#">士林夜市</a></li>
+        </ul>
+    </li>
+    <li><a href="#">澎湖景點</a>
+        <ul>
+            <li><a href="#">跨海大橋</a></li>
+            <li><a href="#">沙灘</a></li>
+            <li><a href="#">觀音亭</a></li>
+        </ul>
+    </li>
+    <li><a href="#">台南景點</a>
+        <ul>
+            <li><a href="#">赤崁樓</a></li>
+            <li><a href="#">台南孔廟</a></li>
+            <li><a href="#">台南小吃>></a>
+                <ul>
+                    <li><a href="#">八寶冰</a></li>
+                    <li><a href="#">蚵仔煎</a></li>
+                    <li><a href="#">米糕</a></li>
+                    <li><a href="#">牛肉湯</a></li>
+                    <li><a href="#">肉燥飯</a></li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>
+</body>
+</html>
